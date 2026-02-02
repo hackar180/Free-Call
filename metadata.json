@@ -1,0 +1,7 @@
+{
+  "name": "ফ্রী তে কল করুন",
+  "description": "An educational prank simulator that features a 'Don't Touch' security mode, a timer-based ghost scare, and an AI-powered 'Seance' mode using Gemini to generate creepy responses.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
