@@ -71,16 +71,7 @@
   }
 }
 </script>
-  <script>
-    // Global error handler to debug Render issues
-    window.onerror = function(msg, url, line) {
-      console.error("Global Error: " + msg + " at " + url + ":" + line);
-      return false;
-    };
-    window.onunhandledrejection = function(event) {
-      console.error("Unhandled Rejection: " + event.reason);
-    };
-  </script>
+  <script type="module" src="index.tsx"></script>
 </head>
 <body>
   <div id="root"></div>
