@@ -6,36 +6,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ফ্রী তে কল করুন</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      color-scheme: dark;
-    }
+    :root { color-scheme: dark; }
     body {
       background-color: #000000;
       color: #ffffff;
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
-      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100vw;
+      height: 100vh;
     }
     #root {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
-    .glitch {
-      position: relative;
+    /* Loading state fallback */
+    #root:empty::before {
+      content: "Loading Signal...";
+      color: #22c55e;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      font-size: 14px;
+      letter-spacing: 2px;
+      animation: pulse 1.5s infinite;
     }
+    @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    
+    .glitch { position: relative; }
     .glitch::before, .glitch::after {
       content: attr(data-text);
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
     }
     .glitch::before {
       left: 2px;
@@ -48,27 +57,30 @@
       text-shadow: -2px 0 #ff0000, 2px 2px #550000;
       animation: glitch-anim2 1s infinite linear alternate-reverse;
     }
-    @keyframes glitch-anim {
-      0% { clip: rect(31px, 9999px, 94px, 0); }
-      100% { clip: rect(67px, 9999px, 62px, 0); }
-    }
-    @keyframes glitch-anim2 {
-      0% { clip: rect(65px, 9999px, 100px, 0); }
-      100% { clip: rect(10px, 9999px, 30px, 0); }
-    }
+    @keyframes glitch-anim { 0% { clip: rect(31px, 9999px, 94px, 0); } 100% { clip: rect(67px, 9999px, 62px, 0); } }
+    @keyframes glitch-anim2 { 0% { clip: rect(65px, 9999px, 100px, 0); } 100% { clip: rect(10px, 9999px, 30px, 0); } }
   </style>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@19.0.0",
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.39.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
+  <script>
+    // Global error handler to debug Render issues
+    window.onerror = function(msg, url, line) {
+      console.error("Global Error: " + msg + " at " + url + ":" + line);
+      return false;
+    };
+    window.onunhandledrejection = function(event) {
+      console.error("Unhandled Rejection: " + event.reason);
+    };
+  </script>
 </head>
 <body>
   <div id="root"></div>

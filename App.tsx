@@ -31,7 +31,7 @@ const FakeCallScreen: React.FC<{ onHangUp: () => void }> = ({ onHangUp }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[300] bg-neutral-900 flex flex-col items-center justify-between py-20 px-10 text-white animate-fade-in">
+    <div className="fixed inset-0 z-[300] bg-neutral-900 flex flex-col items-center justify-between py-20 px-10 text-white animate-fade-in overflow-hidden">
       <div className="text-center">
         <div className="w-24 h-24 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(34,197,94,0.5)]">
           <span className="text-4xl">👤</span>
@@ -90,12 +90,13 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center p-8 select-none overflow-hidden">
+    <div className="fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center p-8 select-none overflow-hidden touch-none">
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         <img 
           src={HACKER_BACKGROUND_URL} 
           alt="bg" 
           className="w-full h-full object-cover grayscale brightness-50"
+          loading="eager"
         />
       </div>
 
@@ -155,12 +156,13 @@ const ScaryOverlay: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
   }, [onFinish]);
 
   return (
-    <div className="fixed inset-0 z-[150] bg-black flex flex-col items-center justify-center cursor-none overflow-hidden">
+    <div className="fixed inset-0 z-[150] bg-black flex flex-col items-center justify-center cursor-none overflow-hidden touch-none">
       <div className="absolute inset-0 opacity-80">
         <img 
           src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1000" 
           alt="Glitch" 
           className="w-full h-full object-cover"
+          loading="eager"
         />
       </div>
       <div className="text-center z-20">
@@ -185,14 +187,12 @@ const App: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleStart = async () => {
-    // Set app as started immediately to avoid black screen if subsequent calls fail
     setAppStarted(true);
 
     const audio = new Audio(GHOST_SCREAM_URL);
     audio.load();
     audioRef.current = audio;
 
-    // Optional browser feature requests (might fail on some devices, wrapped in try/catch)
     if ('wakeLock' in navigator) {
       try {
         await (navigator as any).wakeLock.request('screen');
@@ -237,7 +237,7 @@ const App: React.FC = () => {
 
   if (!appStarted) {
     return (
-      <div className="flex-1 min-h-[100dvh] bg-neutral-950 flex flex-col items-center justify-center p-10 text-center">
+      <div className="flex-1 min-h-[100dvh] bg-black flex flex-col items-center justify-center p-10 text-center">
         <div className="w-24 h-24 bg-green-900/20 rounded-full flex items-center justify-center mb-8 border border-green-500/30 animate-pulse">
            <span className="text-4xl">📡</span>
         </div>
@@ -256,7 +256,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="flex-1 min-h-[100dvh] bg-black text-neutral-200 flex flex-col font-sans relative overflow-hidden">
+    <div className="flex-1 min-h-[100dvh] bg-black text-neutral-200 flex flex-col font-sans relative overflow-x-hidden">
       <div 
         className="absolute inset-0 opacity-20 pointer-events-none mix-blend-screen"
         style={{ backgroundImage: `url(${HACKER_BACKGROUND_URL})`, backgroundSize: 'cover' }}
