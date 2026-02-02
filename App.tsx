@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { GoogleGenAI } from '@google/genai';
 
-// --- Constants & Types ---
+// --- Constants ---
 const GHOST_SCREAM_URL = 'https://www.soundjay.com/human/man-screaming-01.mp3';
 const HACKER_BACKGROUND_URL = 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000';
 const MASTER_PIN = "1998";
@@ -12,7 +11,6 @@ const WHATSAPP_URL = "https://wa.me/8801953913242?text=I'm%20Not%20Hackar%20But%
 interface PrankSettings {
   timerSeconds: number;
   isArmed: boolean;
-  securityMode: boolean;
   lockOnTrigger: boolean;
 }
 
@@ -36,9 +34,9 @@ const FakeCallScreen: React.FC<{ onHangUp: () => void }> = ({ onHangUp }) => {
     <div className="fixed inset-0 z-[300] bg-neutral-900 flex flex-col items-center justify-between py-20 px-10 text-white animate-fade-in">
       <div className="text-center">
         <div className="w-24 h-24 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(34,197,94,0.5)]">
-          <span className="text-4xl">👤</span>
+          <span className="text-4xl text-white">👤</span>
         </div>
-        <h2 className="text-2xl font-bold mb-2">Kuyasa Cyber Hackar</h2>
+        <h2 className="text-2xl font-bold mb-2 text-white">Kuyasa Cyber Hackar</h2>
         <p className="text-neutral-400 font-mono tracking-widest">{SUPPORT_NUMBER}</p>
         <p className="text-green-500 font-mono mt-4 text-xl animate-pulse">{formatTime(timer)}</p>
       </div>
@@ -49,7 +47,7 @@ const FakeCallScreen: React.FC<{ onHangUp: () => void }> = ({ onHangUp }) => {
             <div className="w-14 h-14 border border-white/20 rounded-full flex items-center justify-center bg-white/5">
               <span className="text-xs">⬤</span>
             </div>
-            <span className="text-[10px] uppercase font-bold tracking-tighter">{opt}</span>
+            <span className="text-[10px] uppercase font-bold tracking-tighter text-white">{opt}</span>
           </div>
         ))}
       </div>
@@ -58,12 +56,8 @@ const FakeCallScreen: React.FC<{ onHangUp: () => void }> = ({ onHangUp }) => {
         onClick={onHangUp}
         className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.6)] active:scale-90 transition-transform"
       >
-        <span className="text-4xl rotate-[135deg]">📞</span>
+        <span className="text-4xl rotate-[135deg] text-white">📞</span>
       </button>
-
-      <div className="absolute top-10 w-full text-center">
-        <p className="text-[10px] text-neutral-500 uppercase tracking-[0.5em] animate-pulse">Encryption Active: 256-bit RSA</p>
-      </div>
     </div>
   );
 };
@@ -91,13 +85,6 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
     }
   };
 
-  useEffect(() => {
-    // Attempt to block context menu to make it feel like system is restricted
-    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
-    window.addEventListener('contextmenu', handleContextMenu);
-    return () => window.removeEventListener('contextmenu', handleContextMenu);
-  }, []);
-
   if (isCalling) {
     return <FakeCallScreen onHangUp={() => setIsCalling(false)} />;
   }
@@ -113,11 +100,10 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
       </div>
 
       <div className="text-center mb-10 relative z-10 w-full">
-        <h1 className="text-3xl font-black text-red-600 mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-pulse">Kuyasa Cyber Hackar</h1>
-        <div className="bg-red-950/40 border border-red-500/30 p-4 rounded-xl backdrop-blur-sm">
+        <h1 className="text-3xl font-black text-red-600 mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-pulse uppercase">Kuyasa Cyber Hackar</h1>
+        <div className="bg-red-950/60 border border-red-500/30 p-4 rounded-xl backdrop-blur-md">
           <p className="text-white text-lg font-bold leading-relaxed">ফোন আনলক করতে আপনার ফ্রেন্ড এর নাম্বার এ কল দেন Kuyasa Cyber Hackar</p>
         </div>
-        <p className="text-neutral-500 tracking-[0.3em] text-[10px] uppercase font-mono mt-4">Security Breach: Level 10 Critical</p>
       </div>
 
       <div className={`flex gap-4 mb-8 transition-transform ${error ? 'animate-bounce text-red-600' : ''}`}>
@@ -140,7 +126,7 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
               else if (val === "E") return;
               else handleKeyPress(val);
             }}
-            className="w-16 h-16 rounded-full border border-neutral-800 bg-neutral-950/90 flex items-center justify-center text-xl font-mono text-red-500 hover:bg-red-900/40 hover:border-red-500 transition-colors active:scale-90"
+            className="w-16 h-16 rounded-full border border-neutral-800 bg-neutral-900 flex items-center justify-center text-xl font-mono text-red-500 hover:bg-red-900/40 hover:border-red-500 transition-colors active:scale-90"
           >
             {val}
           </button>
@@ -152,7 +138,7 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
         className="relative z-10 w-full max-w-[280px] py-4 bg-green-600 hover:bg-green-500 text-white rounded-2xl flex items-center justify-center gap-4 shadow-[0_0_30px_rgba(34,197,94,0.4)] active:scale-95 transition-all"
       >
         <span className="text-2xl animate-bounce">📞</span>
-        <span className="font-black text-sm uppercase tracking-widest">Call to Unlock Now</span>
+        <span className="font-black text-sm uppercase tracking-widest text-white">Call to Unlock Now</span>
       </button>
       
       <p className="mt-8 text-[9px] text-red-900 uppercase tracking-widest animate-pulse font-mono text-center">
@@ -164,12 +150,6 @@ const LockScreen: React.FC<{ onUnlock: () => void }> = ({ onUnlock }) => {
 
 const ScaryOverlay: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
   useEffect(() => {
-    try {
-      if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-      }
-    } catch (e) {}
-    
     const timer = setTimeout(onFinish, 4000);
     return () => clearTimeout(timer);
   }, [onFinish]);
@@ -185,50 +165,54 @@ const ScaryOverlay: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
       </div>
       <div className="text-center z-20">
         <h2 className="text-red-600 text-3xl font-mono mb-4 animate-pulse uppercase tracking-widest">Target Found</h2>
-        <h1 className="text-red-500 text-[3rem] md:text-[6rem] font-black glitch drop-shadow-[0_0_20px_rgba(220,38,38,1)]" data-text="Kuyasa Cyber Hackar">Kuyasa Cyber Hackar</h1>
+        <h1 className="text-red-500 text-[3rem] md:text-[6rem] font-black glitch drop-shadow-[0_0_20px_rgba(220,38,38,1)] text-white" data-text="Kuyasa Cyber Hackar">Kuyasa Cyber Hackar</h1>
       </div>
     </div>
   );
 };
 
 const App: React.FC = () => {
+  const [appStarted, setAppStarted] = useState(false);
   const [isScared, setIsScared] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [settings, setSettings] = useState<PrankSettings>({
     timerSeconds: 10,
     isArmed: false,
-    securityMode: false,
     lockOnTrigger: true,
   });
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [wakeLock, setWakeLock] = useState<WakeLockSentinel | null>(null);
-
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
+  // Initialize audio and wake lock safely
+  const handleStart = async () => {
     const audio = new Audio(GHOST_SCREAM_URL);
     audio.load();
     audioRef.current = audio;
 
     if ('wakeLock' in navigator) {
-      const requestWakeLock = async () => {
-        try {
-          const lock = await (navigator as any).wakeLock.request('screen');
-          setWakeLock(lock);
-        } catch (err) {}
-      };
-      requestWakeLock();
+      try {
+        await (navigator as any).wakeLock.request('screen');
+      } catch (err) {
+        console.warn("WakeLock failed:", err);
+      }
     }
-    return () => {
-      if (wakeLock) wakeLock.release();
-    };
-  }, []);
+
+    // Try fullscreen on start to "hide" browser UI
+    try {
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch (e) {}
+
+    setAppStarted(true);
+  };
 
   const triggerScare = useCallback(() => {
     setIsScared(true);
     if (audioRef.current) {
       audioRef.current.volume = 1.0;
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch(e => console.error("Audio play failed:", e));
     }
   }, []);
 
@@ -237,7 +221,7 @@ const App: React.FC = () => {
     if (settings.lockOnTrigger) {
       setIsLocked(true);
     }
-    setSettings(prev => ({ ...prev, isArmed: false, securityMode: false }));
+    setSettings(prev => ({ ...prev, isArmed: false }));
     setCountdown(null);
   }, [settings.lockOnTrigger]);
 
@@ -253,6 +237,26 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [settings.isArmed, countdown, triggerScare]);
 
+  if (!appStarted) {
+    return (
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-10 text-center">
+        <div className="w-20 h-20 bg-green-900/20 rounded-full flex items-center justify-center mb-8 border border-green-500/30 animate-pulse">
+           <span className="text-3xl">📡</span>
+        </div>
+        <h1 className="text-green-500 text-2xl font-bold mb-4 tracking-wider">Secure Signal Terminal</h1>
+        <p className="text-neutral-500 text-sm mb-10 max-w-xs leading-relaxed">
+          ফ্রী তে কল সার্ভিস টি শুরু করতে নিচের বাটনে ক্লিক করে কানেক্ট করুন।
+        </p>
+        <button 
+          onClick={handleStart}
+          className="w-full max-w-xs py-4 bg-green-600 hover:bg-green-500 text-white font-black uppercase tracking-widest rounded-2xl shadow-[0_0_30px_rgba(34,197,94,0.3)] transition-all active:scale-95"
+        >
+          CONNECT SERVER
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-200 flex flex-col font-sans relative overflow-hidden">
       <div 
@@ -263,7 +267,7 @@ const App: React.FC = () => {
       {isScared && <ScaryOverlay onFinish={finishScare} />}
       {isLocked && <LockScreen onUnlock={() => setIsLocked(false)} />}
 
-      <header className="p-6 border-b border-green-900/30 flex justify-between items-center z-10 backdrop-blur-md bg-black/40">
+      <header className="p-6 border-b border-green-900/30 flex justify-between items-center z-10 backdrop-blur-md bg-black/60">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-green-600 rounded-full animate-pulse border border-green-400 shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
           <h1 className="text-xl font-bold text-green-500 tracking-wider">ফ্রী তে কল করুন</h1>
@@ -273,7 +277,7 @@ const App: React.FC = () => {
 
       <main className="flex-1 flex flex-col p-6 gap-6 z-10 max-w-2xl mx-auto w-full">
         
-        <div className="bg-neutral-900/60 border border-green-900/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <div className="bg-neutral-900/80 border border-green-900/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
           <div className="w-40 h-40 rounded-full border-4 border-dashed border-green-900/40 flex items-center justify-center mb-6 relative group overflow-hidden">
             <div className="absolute inset-0 bg-green-500/5 rounded-full blur-2xl group-hover:bg-green-500/10 transition-all"></div>
             {countdown !== null ? (
@@ -289,7 +293,7 @@ const App: React.FC = () => {
 
         <div className="grid grid-cols-1 gap-4">
           <button 
-            onClick={() => { triggerScare(); }}
+            onClick={triggerScare}
             className="p-8 bg-green-900/10 border border-green-900/30 rounded-2xl flex flex-col items-center justify-center hover:bg-green-900/20 transition-all active:scale-95 group shadow-lg"
           >
             <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">📞</span>
@@ -334,10 +338,7 @@ const App: React.FC = () => {
               rel="noopener noreferrer"
               className="w-full py-4 bg-[#075E54] hover:bg-[#128C7E] text-white rounded-xl flex items-center justify-center gap-3 font-bold text-sm uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(37,211,102,0.1)] border border-green-500/20"
             >
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.171c1.533.909 3.277 1.388 5.051 1.389 5.399 0 9.791-4.393 9.794-9.792 0-2.614-1.017-5.071-2.864-6.92s-4.306-2.865-6.921-2.865c-5.4 0-9.791 4.394-9.794 9.793 0 1.849.52 3.652 1.503 5.215l-1.007 3.676 3.738-.98zm11.233-5.232c-.303-.151-1.791-.883-2.068-.984-.277-.101-.479-.151-.681.151-.202.303-.783.984-.96 1.185-.177.202-.353.226-.656.075-.303-.151-1.28-.472-2.438-1.505-.901-.804-1.507-1.796-1.684-2.099-.177-.303-.019-.467.132-.617.136-.135.303-.353.454-.529.151-.177.202-.303.303-.504.101-.202.05-.378-.025-.529-.075-.151-.681-1.639-.933-2.244-.246-.589-.494-.509-.681-.519-.177-.01-.379-.012-.581-.012-.202 0-.53.076-.807.378-.277.303-1.059 1.034-1.059 2.521s1.084 2.924 1.235 3.126c.151.202 2.134 3.259 5.168 4.567.721.311 1.282.496 1.72.636.724.23 1.383.197 1.903.119.58-.087 1.791-.731 2.043-1.437.252-.706.252-1.311.177-1.437-.076-.126-.277-.202-.581-.353z"/>
-              </svg>
-              WhatsApp Message
+              <span className="font-bold text-sm uppercase tracking-wider text-white">WhatsApp Message</span>
             </a>
           </div>
         </div>
